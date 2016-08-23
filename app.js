@@ -1,4 +1,5 @@
-var app = angular.module('flapperNews', []);
+ //because we are adding an external module, we need to be sure to include it as a dependency in  our app ie. ui.router
+var app = angular.module('flapperNews', ['ui.router']); //ui-router newer than ngRouter
 
 app.factory('posts',[function(){
     var o = {
@@ -49,3 +50,20 @@ app.controller('MainCtrl', ['$scope','posts',
         }
     }
 ]);
+
+
+app.config(['$stateProvider','$urlRouterProvider',
+           function($stateProvider, $urlRouterProvider){
+               
+               
+               $stateProvider
+                .state('home',{
+                   url: '/home',
+                   templateUrl: '/home.html',
+                   controller: 'MainCtrl'
+               });
+               
+               //use otherwise to redirect unspecified routes (i guess its the default??)
+               $urlRouterProvider.otherwise('home');
+               
+           }])
