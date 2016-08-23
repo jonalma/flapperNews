@@ -63,7 +63,7 @@ app.config(['$stateProvider','$urlRouterProvider',
                    controller: 'MainCtrl'
                });
                
-               //use otherwise to redirect unspecified routes (i guess its the default??)
+               //use otherwise to redirect unspecified routes (if a url is undefined)
                $urlRouterProvider.otherwise('home');
                
            }])
