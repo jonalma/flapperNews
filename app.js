@@ -1,18 +1,17 @@
  //because we are adding an external module, we need to be sure to include it as a dependency in  our app ie. ui.router
 var app = angular.module('flapperNews', ['ui.router']); //ui-router newer than ngRouter
 
-app.factory('posts',[function(){
-    var o = {
-        posts: []
-    }
-    return o;
+app.factory('posts',[
+    function(){
+        var o = {
+            posts: []
+        }
+        return o;
 }])
 
 app.controller('MainCtrl', ['$scope','posts',
     function($scope, posts) {
         $scope.posts = posts.posts
-        
-        $scope.test = 'Hello world!';
         
         $scope.posts = [{
             title: 'post 1',
@@ -38,7 +37,11 @@ app.controller('MainCtrl', ['$scope','posts',
                 $scope.posts.push({
                     title: $scope.title,
                     link: $scope.link,
-                    upvotes: 0
+                    upvotes: 0,
+                    comments: [
+                        {author: 'Joe', body: 'Cool post!', upvotes: 0},
+                        {author: 'Bob', body: 'Great idea but everything is wrong!', upvotes: 0}
+                    ]
                 });
                 $scope.title = "";
                 $scope.link = "";
@@ -48,6 +51,13 @@ app.controller('MainCtrl', ['$scope','posts',
         $scope.incrementUpvotes = function(post){
             post.upvotes += 1;
         }
+    }
+]);
+
+app.controller('PostsCtrl', [ '$scope','$stateParams','posts',
+    function(){
+        $scope.post = posts.posts[$stateParams.id]; //object that grabs posts from the 'posts' service using the id from $stateParams
+                            
     }
 ]);
 
@@ -61,6 +71,12 @@ app.config(['$stateProvider','$urlRouterProvider',
                    url: '/home',
                    templateUrl: '/home.html',
                    controller: 'MainCtrl'
+               })
+                       
+                .state('posts',{
+                   url: '/posts/{id}',  // id = route parameter that will be made available to our controller
+                   templateUrl: '/posts.html',
+                   controller: 'PostsCtrl'
                });
                
                //use otherwise to redirect unspecified routes (if a url is undefined)
