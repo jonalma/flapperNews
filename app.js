@@ -15,7 +15,11 @@ app.controller('MainCtrl', ['$scope','posts',
         
         $scope.posts = [{
             title: 'post 1',
-            upvotes: 5
+            upvotes: 5,
+            comments: [
+                        {author: 'Jon', body: 'Comments has to be an array', upvotes: 0},
+                        {author: 'dude', body: 'for you to push more comments!', upvotes: 0}
+                    ]
         }, {
             title: 'post 2',
             upvotes: 2
@@ -50,8 +54,8 @@ app.controller('MainCtrl', ['$scope','posts',
                     ]
                 }
                 
-                $scope.posts.push(newpost);
-                posts.posts.push(newpost);
+                $scope.posts.push(newpost); // made a variable called newpost
+                posts.posts.push(newpost); // added newpost to posts.posts array
                 
                 $scope.title = "";
                 $scope.link = "";
@@ -67,9 +71,9 @@ app.controller('MainCtrl', ['$scope','posts',
 
 app.controller('PostsCtrl', [ '$scope','$stateParams','posts',
     function($scope, $stateParams, posts){
-        console.log(posts.posts)
+        //console.log(posts.posts)
         $scope.post = posts.posts[$stateParams.id]; //object that grabs posts from the 'posts' service using the id from $stateParams
-        console.log(posts.posts[$stateParams.id]);
+        console.log($scope.post);
         
         $scope.addComment = function(){
             if($scope.body === '') { return; }
@@ -80,6 +84,10 @@ app.controller('PostsCtrl', [ '$scope','$stateParams','posts',
                 upvotes: 0
             });
             $scope.body = '';
+        };
+        
+        $scope.incrementUpvotes = function(post){
+            post.upvotes += 1;
         };
     }]);
 
