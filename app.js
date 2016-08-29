@@ -22,16 +22,20 @@ app.controller('MainCtrl', ['$scope','posts',
                     ]
         }, {
             title: 'post 2',
-            upvotes: 2
+            upvotes: 2,
+            comments: []
         }, {
             title: 'post 3',
-            upvotes: 15
+            upvotes: 15,
+            comments: []
         }, {
             title: 'post 4',
-            upvotes: 9
+            upvotes: 9,
+            comments: []
         }, {
             title: 'post 5',
-            upvotes: 4
+            upvotes: 4,
+            comments: []
         }];
         
         if(posts.posts.length == 0 || !posts.posts)
